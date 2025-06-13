@@ -1,1 +1,0 @@
-import{_ as s,c as t,b as o,o as a}from"./index-VOPRj5Xd.js";const r={class:"portfolio"},c={__name:"PortfolioView",setup(i){return(l,e)=>(a(),t("div",r,e[0]||(e[0]=[o("div",{class:"container"},[o("h1",{class:"display-medium"},"Portfolio"),o("p",{class:"body-large"},"Explore our creative work and projects.")],-1)])))}},_=s(c,[["__scopeId","data-v-7e0a176e"]]);export{_ as default};

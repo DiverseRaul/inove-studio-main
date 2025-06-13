@@ -1,1 +1,0 @@
-import{_ as e,c as s,b as t,o as c}from"./index-VOPRj5Xd.js";const o={class:"contact"},n={__name:"ContactView",setup(r){return(i,a)=>(c(),s("div",o,a[0]||(a[0]=[t("div",{class:"container"},[t("h1",{class:"display-medium"},"Contact Us"),t("p",{class:"body-large"},"Get in touch with our creative team.")],-1)])))}},d=e(n,[["__scopeId","data-v-8cd542aa"]]);export{d as default};
