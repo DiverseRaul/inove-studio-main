@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "serve": "vite preview --port 3000 --host 0.0.0.0",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist --spa"
   },
   "dependencies": {
     "aos": "^3.0.0-beta.6",
