@@ -1,0 +1,22 @@
+{
+  "name": "inove-studio-website",
+  "version": "1.0.0",
+  "description": "Modern Vue.js 3 website for inove.studio with Material 3 Expressive design",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 3000 --host 0.0.0.0"
+  },
+  "dependencies": {
+    "aos": "^3.0.0-beta.6",
+    "pinia": "^2.1.0",
+    "vue": "^3.4.0",
+    "vue-router": "^4.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
