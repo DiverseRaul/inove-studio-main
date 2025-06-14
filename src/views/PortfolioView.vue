@@ -8,7 +8,7 @@
               <img :src="item.imageUrl" :alt="item.title" class="card-image" />
             </div>
             <div class="card-content">
-              <h2 class="title-large card-title">{{ item.title }}</h2>
+              <h2 class="title-large card-title"><b>{{ item.title }}</b></h2>
               <p class="body-medium card-description">{{ item.description }}</p>
               <div class="card-tags">
                 <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
@@ -41,19 +41,19 @@ import BaseButton from '@/components/BaseButton.vue';
 const portfolioItems = ref([
   {
     id: 1,
-    title: 'Project Alpha',
-    description: 'A cutting-edge web application leveraging AI for enhanced user experience and data-driven insights.',
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['Web App', 'AI', 'Vue.js', 'Data Analytics'],
-    projectUrl: '#project-alpha-link'
+    title: 'Bolao Mania',
+    description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
+    imageUrl: '/bolaomaniawebpage.png',
+    tags: ['Mobile', 'Web App', 'Vue.js', 'Sports'],
+    projectUrl: 'https://bolaomania.com'
   },
   {
     id: 2,
-    title: 'Mobile First Platform',
-    description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
-    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['Mobile', 'UX/UI', 'iOS', 'Android'],
-    projectUrl: '#mobile-platform-link'
+    title: 'inove.profile',
+    description: 'Manage your profile for inove.studio. Create your profile and start up your journey.',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    tags: ['Web App', 'Profile', 'Vue.js', 'Data'],
+    projectUrl: 'https://profile.inove.studio'
   },
   {
     id: 3,
