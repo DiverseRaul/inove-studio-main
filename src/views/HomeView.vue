@@ -116,8 +116,8 @@ const features = ref([
   },
   {
     id: 3,
-    title: 'Digital Strategy',
-    description: 'Data-driven approaches to digital transformation that deliver measurable business results.',
+    title: 'AI Development',
+    description: 'Building intelligent systems that automate tasks, provide insights, and drive business growth.',
     iconClass: 'icon-strategy',
     color: '--color-tertiary'
   }

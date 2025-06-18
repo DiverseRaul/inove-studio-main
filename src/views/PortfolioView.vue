@@ -8,7 +8,10 @@
               <img :src="item.imageUrl" :alt="item.title" class="card-image" />
             </div>
             <div class="card-content">
-              <h2 class="title-large card-title"><b>{{ item.title }}</b></h2>
+                            <div class="title-wrapper">
+                <h2 class="title-large card-title"><b>{{ item.title }}</b></h2>
+                <span v-if="item.status !== 'Complete'" class="status-badge" :class="`status-${item.status.toLowerCase().replace(' ', '-')}`">{{ item.status }}</span>
+              </div>
               <p class="body-medium card-description">{{ item.description }}</p>
               <div class="card-tags">
                 <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
@@ -45,31 +48,26 @@ const portfolioItems = ref([
     description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
     imageUrl: '/bolaomaniawebpage.png',
     tags: ['Mobile', 'Web App', 'Vue.js', 'Sports'],
-    projectUrl: 'https://bolaomania.com'
+    projectUrl: 'https://bolaomania.com',
+    status: 'Complete'
   },
   {
     id: 2,
     title: 'inove.profile',
-    description: 'Manage your profile for inove.studio. Create your profile and start up your journey.',
+    description: 'Manage your profile for inove.studio. Create your profile and start up your journey for the future.',
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
     tags: ['Web App', 'Profile', 'Vue.js', 'Data'],
-    projectUrl: 'https://profile.inove.studio'
+    projectUrl: 'https://profile.inove.studio',
+    status: 'In Development'
   },
   {
     id: 3,
-    title: 'E-commerce Solution',
-    description: 'A robust and scalable e-commerce platform with advanced features for online retail success.',
-    imageUrl: 'https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['E-commerce', 'Node.js', 'Cloud', 'Stripe'],
-    projectUrl: '#ecommerce-solution-link'
-  },
-  {
-    id: 4,
-    title: 'Creative Branding Suite',
-    description: 'A comprehensive branding package for a startup, including logo, visual identity, and marketing materials.',
-    imageUrl: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['Branding', 'Graphic Design', 'Marketing'],
-    projectUrl: '#branding-suite-link'
+    title: 'AI Platform',
+    description: 'Work faster and more intelligently with AI.',
+    imageUrl: 'https://images.unsplash.com/photo-1620712943543-2858200e74a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
+    tags: ['AI', 'Automation'],
+    projectUrl: '#ai-platform-link',
+    status: 'Upcoming'
   }
 ]);
 </script>
@@ -93,6 +91,44 @@ const portfolioItems = ref([
 .page-title {
   color: var(--color-primary);
   margin-bottom: var(--spacing-md);
+}
+
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.card-content .card-title {
+  margin-bottom: 0;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.status-complete {
+  background-color: var(--color-success-container);
+  color: var(--color-on-success-container);
+}
+
+.status-in-development {
+  background-color: var(--color-tertiary-container);
+  color: var(--color-on-tertiary-container);
+}
+
+.status-upcoming {
+  background-color: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
 }
 
 .page-subtitle {

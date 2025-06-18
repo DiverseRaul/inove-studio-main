@@ -36,12 +36,12 @@
           <div class="mission-text">
             <h2>Empowering through <span class="gradient-text">Design & Technology</span></h2>
             <p class="mission-statement">
-              I believe websites are more than just sites, they are tools and resources
-              that should be accessible to everyone and meet the needs of the user.
+              "Websites are more than just sites, they are tools and resources
+              that should be accessible to everyone and meet the needs of the user."
             </p>
             <div class="mission-stats">
               <div class="stat">
-                <div class="stat-number" data-count="50">0</div>
+                <div class="stat-number" data-count="5">0</div>
                 <div class="stat-label">Projects</div>
               </div>
               <div class="stat">
@@ -49,7 +49,7 @@
                 <div class="stat-label">Client Satisfaction</div>
               </div>
               <div class="stat">
-                <div class="stat-number" data-count="10">0</div>
+                <div class="stat-number" data-count="2">0</div>
                 <div class="stat-label">Years Experience</div>
               </div>
             </div>
