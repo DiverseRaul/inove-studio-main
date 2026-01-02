@@ -2,8 +2,17 @@
   <div class="portfolio-view">
     <section class="portfolio-grid-section">
       <div class="container">
+        <div class="portfolio-controls">
+          <label class="portfolio-controls-label" for="portfolioStatusSelect">Sort / Filter</label>
+          <select id="portfolioStatusSelect" v-model="selectedStatus" class="portfolio-controls-select">
+            <option value="all">All (Status Order)</option>
+            <option value="Complete">Complete</option>
+            <option value="In Development">In Development</option>
+            <option value="Upcoming">Upcoming</option>
+          </select>
+        </div>
         <div class="portfolio-grid">
-          <div v-for="item in portfolioItems" :key="item.id" class="portfolio-card">
+          <div v-for="item in displayedItems" :key="item.id" class="portfolio-card">
             <div class="card-image-container">
               <img :src="item.imageUrl" :alt="item.title" class="card-image" />
             </div>
@@ -38,8 +47,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
+
+const selectedStatus = ref('all');
+
+const STATUS_ORDER = ['Complete', 'In Development', 'Upcoming'];
+const getStatusRank = (status) => {
+  const idx = STATUS_ORDER.indexOf(status);
+  return idx === -1 ? Number.POSITIVE_INFINITY : idx;
+};
 
 const portfolioItems = ref([
   {
@@ -47,7 +64,7 @@ const portfolioItems = ref([
     title: 'Bolao Mania',
     description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
     imageUrl: '/bolaomaniawebpage.png',
-    tags: ['Mobile', 'Web App', 'Vue.js', 'Sports'],
+    tags: ['Mobile', 'Web App', 'Sports'],
     projectUrl: 'https://bolaomania.com',
     status: 'Complete'
   },
@@ -55,21 +72,42 @@ const portfolioItems = ref([
     id: 2,
     title: 'inove.profile',
     description: 'Manage your profile for inove.studio. Create your profile and start up your journey for the future.',
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['Web App', 'Profile', 'Vue.js', 'Data'],
+    imageUrl: '/inoveprofilewebimage.png',
+    tags: ['Web App', 'Profile', 'Data'],
     projectUrl: 'https://profile.inove.studio',
     status: 'In Development'
   },
   {
     id: 3,
-    title: 'AI Platform',
-    description: 'Work faster and more intelligently with AI.',
-    imageUrl: 'https://images.unsplash.com/photo-1620712943543-2858200e74a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-    tags: ['AI', 'Automation'],
-    projectUrl: '#ai-platform-link',
-    status: 'Upcoming'
+    title: 'my soccer lab',
+    description: 'The ultimate platform for soccer analytics and team management.',
+    imageUrl: '/mysoccerlab.png',
+    tags: ['Soccer', 'Analytics', 'Mobile'],
+    projectUrl: '#https://mysoccerlab.inove.studio',
+    status: 'Complete'
+  },
+  {
+    id: 4,
+    title: 'inove.games',
+    description: 'Find and play/access our games.',
+    imageUrl: '/',
+    tags: ['Games', 'Mobile'],
+    projectUrl: '#https://games.inove.studio',
+    status: 'In Development'
   }
 ]);
+
+const displayedItems = computed(() => {
+  const filtered = selectedStatus.value === 'all'
+    ? portfolioItems.value
+    : portfolioItems.value.filter((item) => item.status === selectedStatus.value);
+
+  return [...filtered].sort((a, b) => {
+    const rankDiff = getStatusRank(a.status) - getStatusRank(b.status);
+    if (rankDiff !== 0) return rankDiff;
+    return String(a.title).localeCompare(String(b.title));
+  });
+});
 </script>
 
 <style scoped>
@@ -78,6 +116,29 @@ const portfolioItems = ref([
   color: var(--color-text);
   min-height: 100vh;
   padding-bottom: var(--spacing-3xl);
+}
+
+.portfolio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.portfolio-controls-label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-label-medium, 0.9rem);
+  font-weight: 600;
+}
+
+.portfolio-controls-select {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm, 8px);
+  padding: 10px 12px;
+  outline: none;
 }
 
 /* Header styles (restored) */
@@ -242,6 +303,12 @@ const portfolioItems = ref([
   .portfolio-grid {
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
+  }
+  .portfolio-controls {
+    justify-content: stretch;
+  }
+  .portfolio-controls-select {
+    width: 100%;
   }
   .page-header { /* Restored responsive style */
     padding: var(--spacing-2xl) 0 var(--spacing-xl);
