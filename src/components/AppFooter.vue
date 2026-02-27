@@ -60,7 +60,7 @@
             <ul class="nav-list">
               <li class="contact-item">
                 <span class="contact-icon">✉️</span>
-                <a href="mailto:hello@inove.studio" class="nav-link">hello@inove.studio</a>
+                <a href="mailto:contact@inove.studio" class="nav-link">contact@inove.studio</a>
               </li>
             </ul>
           </div>

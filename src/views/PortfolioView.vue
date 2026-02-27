@@ -1,45 +1,71 @@
 <template>
-  <div class="portfolio-view">
-    <section class="portfolio-grid-section">
+  <div class="portfolio-page">
+    <!-- Hero -->
+    <section class="portfolio-hero">
       <div class="container">
-        <div class="portfolio-controls">
-          <label class="portfolio-controls-label" for="portfolioStatusSelect">Sort / Filter</label>
-          <select id="portfolioStatusSelect" v-model="selectedStatus" class="portfolio-controls-select">
-            <option value="all">All (Status Order)</option>
-            <option value="Complete">Complete</option>
-            <option value="In Development">In Development</option>
-            <option value="Upcoming">Upcoming</option>
-          </select>
+        <div class="hero-content">
+          <span class="hero-eyebrow">Portfolio</span>
+          <h1 class="hero-heading">Our <span class="gradient-text">Work</span></h1>
+          <p class="hero-description">A selection of projects we've built for clients and ourselves. Each one crafted with care and attention to detail.</p>
         </div>
+      </div>
+      <div class="hero-bg">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+      </div>
+    </section>
+
+    <!-- Portfolio Content -->
+    <section class="portfolio-content">
+      <div class="container">
+        <!-- Filter -->
+        <div class="filter-bar">
+          <button 
+            v-for="filter in filters" 
+            :key="filter.value"
+            class="filter-btn"
+            :class="{ 'filter-active': selectedStatus === filter.value }"
+            @click="selectedStatus = filter.value"
+          >
+            {{ filter.label }}
+          </button>
+        </div>
+
+        <!-- Grid -->
         <div class="portfolio-grid">
-          <div v-for="item in displayedItems" :key="item.id" class="portfolio-card">
-            <div class="card-image-container">
+          <a 
+            v-for="item in displayedItems" 
+            :key="item.id" 
+            :href="item.projectUrl" 
+            target="_blank" 
+            class="portfolio-card"
+          >
+            <div class="card-image-wrapper">
               <img :src="item.imageUrl" :alt="item.title" class="card-image" />
-            </div>
-            <div class="card-content">
-                            <div class="title-wrapper">
-                <h2 class="title-large card-title"><b>{{ item.title }}</b></h2>
-                <span v-if="item.status !== 'Complete'" class="status-badge" :class="`status-${item.status.toLowerCase().replace(' ', '-')}`">{{ item.status }}</span>
+              <div class="card-overlay">
+                <span class="overlay-text">
+                  View Project
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                </span>
               </div>
-              <p class="body-medium card-description">{{ item.description }}</p>
+            </div>
+            <div class="card-body">
+              <div class="card-header">
+                <h3 class="card-title">{{ item.title }}</h3>
+                <span 
+                  v-if="item.status !== 'Complete'" 
+                  class="status-badge" 
+                  :class="`status-${item.status.toLowerCase().replace(' ', '-')}`"
+                >
+                  {{ item.status }}
+                </span>
+              </div>
+              <p class="card-desc">{{ item.description }}</p>
               <div class="card-tags">
-                <span v-for="tag in item.tags" :key="tag" class="tag-chip">{{ tag }}</span>
+                <span v-for="tag in item.tags" :key="tag" class="tag">{{ tag }}</span>
               </div>
-              <BaseButton
-                :href="item.projectUrl"
-                target="_blank"
-                variant="tonal"
-                size="small"
-                color="primary"
-                class="card-action-button"
-              >
-                View Project
-                <template #icon>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </template>
-              </BaseButton>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -48,9 +74,15 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import BaseButton from '@/components/BaseButton.vue';
 
 const selectedStatus = ref('all');
+
+const filters = [
+  { label: 'All', value: 'all' },
+  { label: 'Complete', value: 'Complete' },
+  { label: 'In Development', value: 'In Development' },
+  { label: 'Upcoming', value: 'Upcoming' }
+];
 
 const STATUS_ORDER = ['Complete', 'In Development', 'Upcoming'];
 const getStatusRank = (status) => {
@@ -83,7 +115,7 @@ const portfolioItems = ref([
     description: 'The ultimate platform for soccer analytics and team management.',
     imageUrl: '/mysoccerlab.png',
     tags: ['Soccer', 'Analytics', 'Mobile'],
-    projectUrl: '#https://mysoccerlab.inove.studio',
+    projectUrl: 'https://mysoccerlab.inove.studio',
     status: 'Complete'
   },
   {
@@ -92,7 +124,7 @@ const portfolioItems = ref([
     description: 'Find and play/access our games.',
     imageUrl: '/',
     tags: ['Games', 'Mobile'],
-    projectUrl: '#https://games.inove.studio',
+    projectUrl: 'https://games.inove.studio',
     status: 'In Development'
   }
 ]);
@@ -111,217 +143,296 @@ const displayedItems = computed(() => {
 </script>
 
 <style scoped>
-.portfolio-view {
-  background-color: var(--color-background);
-  color: var(--color-text);
+.portfolio-page {
   min-height: 100vh;
-  padding-bottom: var(--spacing-3xl);
+  color: var(--color-text);
 }
 
-.portfolio-controls {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-lg);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-.portfolio-controls-label {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-label-medium, 0.9rem);
-  font-weight: 600;
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.portfolio-controls-select {
-  background-color: var(--color-surface-container);
-  color: var(--color-on-surface);
-  border: 1px solid var(--color-outline-variant);
-  border-radius: var(--radius-sm, 8px);
-  padding: 10px 12px;
-  outline: none;
-}
-
-/* Header styles (restored) */
-.page-header {
-  padding: var(--spacing-3xl) 0 var(--spacing-2xl);
+/* ========== HERO ========== */
+.portfolio-hero {
+  position: relative;
+  padding: 12rem 0 6rem;
+  overflow: hidden;
   text-align: center;
-  background-color: var(--color-surface-container-low);
-  border-bottom: 1px solid var(--color-outline-variant);
-}
-
-.page-title {
-  color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
-}
-
-.title-wrapper {
+  min-height: 70vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
 }
 
-.card-content .card-title {
-  margin-bottom: 0;
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 16px;
-  font-size: 0.75rem;
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  letter-spacing: 0.15em;
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+  padding: 0.3rem 1rem;
+  background: rgba(var(--color-primary-rgb), 0.08);
+  border-radius: 50px;
 }
 
-.status-complete {
-  background-color: var(--color-success-container);
-  color: var(--color-on-success-container);
+.hero-heading {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 1.5rem;
 }
 
-.status-in-development {
-  background-color: var(--color-tertiary-container);
-  color: var(--color-on-tertiary-container);
-}
-
-.status-upcoming {
-  background-color: var(--color-secondary-container);
-  color: var(--color-on-secondary-container);
-}
-
-.page-subtitle {
+.hero-description {
+  font-size: 1.15rem;
+  line-height: 1.8;
   color: var(--color-text-secondary);
-  max-width: 600px;
-  margin: 0 auto var(--spacing-lg);
+  max-width: 550px;
+  margin: 0 auto;
 }
 
-.portfolio-grid-section {
-  padding: var(--spacing-2xl) 0;
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
 }
 
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.2;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-primary);
+  top: 10%;
+  left: 10%;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--color-secondary);
+  bottom: 10%;
+  right: 10%;
+}
+
+/* ========== PORTFOLIO CONTENT ========== */
+.portfolio-content {
+  padding: 4rem 0 6rem;
+  background: var(--color-surface);
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.filter-btn:hover {
+  border-color: rgba(var(--color-primary-rgb), 0.3);
+  color: var(--color-text);
+}
+
+.filter-active {
+  background: rgba(var(--color-primary-rgb), 0.12);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Grid */
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--spacing-xl);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 }
 
+/* Card */
 .portfolio-card {
-  background-color: var(--color-surface-container);
-  border-radius: var(--radius-lg, 16px);
-  box-shadow: var(--shadow-3);
-  border: 2px solid transparent; /* Initial transparent border */
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-color 0.3s ease-out,
-              background-color 0.3s ease-out; /* Added background-color transition */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Ensures content like scaled image respects border radius */
+  background: var(--color-surface-container);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.4s ease;
 }
 
 .portfolio-card:hover {
-  transform: translateY(-12px) scale(1.04) rotate(-1.5deg);
-  box-shadow: var(--shadow-6, 0 16px 32px -8px rgba(0,0,0,0.3)); /* More pronounced shadow */
-  border-color: var(--color-primary);
-  background-color: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-container)); /* Subtle primary color tint on hover */
+  transform: translateY(-6px);
+  border-color: rgba(var(--color-primary-rgb), 0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
-.card-image-container {
+/* Image */
+.card-image-wrapper {
+  position: relative;
   width: 100%;
-  height: 220px;
-  background-color: var(--color-surface-variant);
-  overflow: hidden; /* Crucial for image zoom effect */
-  /* Adjust border-radius if the card's border makes the top corners of image container look off */
-  /* border-radius: calc(var(--radius-lg, 16px) - 2px) calc(var(--radius-lg, 16px) - 2px) 0 0; */ 
+  height: 240px;
+  overflow: hidden;
+  background: var(--color-background);
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.5s ease;
 }
 
 .portfolio-card:hover .card-image {
-  transform: scale(1.15); /* Increased image zoom */
+  transform: scale(1.08);
 }
 
-.card-content {
-  padding: var(--spacing-lg);
-  flex-grow: 1;
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.portfolio-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  background: rgba(var(--color-primary-rgb), 0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Body */
+.card-body {
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .card-title {
-  color: var(--color-on-surface);
-  margin-bottom: var(--spacing-sm);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
 }
 
-.card-description {
-  color: var(--color-on-surface-variant);
-  margin-bottom: var(--spacing-md);
+.status-badge {
+  padding: 0.2rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.status-in-development {
+  background: rgba(var(--color-primary-rgb), 0.12);
+  color: var(--color-primary);
+}
+
+.status-upcoming {
+  background: rgba(var(--color-secondary-rgb), 0.12);
+  color: var(--color-secondary);
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1rem;
   flex-grow: 1;
-  line-height: 1.6;
 }
 
 .card-tags {
-  margin-bottom: var(--spacing-lg);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
+  gap: 0.4rem;
 }
 
-.tag-chip {
-  background-color: var(--color-secondary-container);
-  color: var(--color-on-secondary-container);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm, 8px);
-  font-size: var(--font-size-label-small);
-  font-weight: 500;
+.tag {
+  padding: 0.2rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(var(--color-secondary-rgb), 0.08);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
 }
 
-.card-action-button {
-  align-self: flex-start;
-  margin-top: auto; /* Pushes button to the bottom */
-}
-
-/* Animate button icon on hover */
-:deep(.card-action-button .button-icon svg) {
-  transition: transform 0.3s ease-out; /* Smooth transition back */
-}
-:deep(.card-action-button:hover .button-icon svg) {
-  transform: translateX(3px) scale(1.1);
-  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Responsive adjustments */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
+  .portfolio-hero {
+    padding: 9rem 0 3rem;
+    min-height: auto;
+  }
+  .hero-heading {
+    font-size: 2.25rem;
+  }
   .portfolio-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
   }
-  .portfolio-controls {
-    justify-content: stretch;
-  }
-  .portfolio-controls-select {
-    width: 100%;
-  }
-  .page-header { /* Restored responsive style */
-    padding: var(--spacing-2xl) 0 var(--spacing-xl);
-  }
-  .card-image-container {
+  .card-image-wrapper {
     height: 200px;
-  }
-  .portfolio-card:hover {
-    /* Tone down hover effect slightly on mobile if needed */
-    transform: translateY(-8px) scale(1.02) rotate(-1deg);
-  }
-  .portfolio-card:hover .card-image {
-    transform: scale(1.1);
   }
 }
 </style>
