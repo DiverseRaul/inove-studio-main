@@ -1,66 +1,46 @@
-/* Material 3 Expressive Design System - Dark Mode */
+/* Clean Portfolio Design System - Dark Mode */
 
 :root {
-  /* Primary Colors */
-  --color-primary: #6750A4;
-  --color-primary-hover: #7C4DFF;
-  --color-primary-container: #EADDFF;
-  --color-on-primary: #FFFFFF;
-  --color-on-primary-container: #21005D;
-  --color-primary-rgb: 103, 80, 164;
+  /* Primary Colors - Monochrome with subtle accent */
+  --color-primary: #ffffff;
+  --color-primary-hover: #e5e5e5;
+  --color-primary-container: #27272a;
+  --color-on-primary: #09090b;
+  --color-on-primary-container: #ffffff;
+  --color-primary-rgb: 255, 255, 255;
 
   /* Secondary Colors */
-  --color-secondary: #03DAC6;
-  --color-secondary-hover: #00BFA5;
-  --color-secondary-container: #004D40;
+  --color-secondary: #a1a1aa;
+  --color-secondary-hover: #d4d4d8;
+  --color-secondary-container: #18181b;
   --color-on-secondary: #000000;
-  --color-on-secondary-container: #A7F3D0;
-  --color-secondary-rgb: 3, 218, 198;
+  --color-on-secondary-container: #f4f4f5;
+  --color-secondary-rgb: 161, 161, 170;
 
   /* Background Colors */
-  --color-background: #0a0a0f;
-  --color-background-rgb: 10, 10, 15;
-  --color-surface: #141418;
-  --color-surface-variant: #2A2A2A;
-  --color-surface-container: #1c1c22;
-  --color-surface-container-low: #111116;
-  --color-surface-container-high: #2a2a32;
+  --color-background: #09090b;
+  --color-background-rgb: 9, 9, 11;
+  --color-surface: #09090b;
+  --color-surface-variant: #18181b;
+  --color-surface-container: #18181b;
+  --color-surface-container-low: #09090b;
+  --color-surface-container-high: #27272a;
 
   /* Text Colors */
-  --color-text: #FFFFFF;
-  --color-text-secondary: #B3B3B3;
-  --color-text-tertiary: #808080;
-  --color-on-surface: #FFFFFF;
-  --color-on-surface-variant: #CAC4D0;
-
-  /* Accent Colors */
-  --color-tertiary: #7D5260;
-  --color-tertiary-container: #FFD8E4;
-  --color-on-tertiary: #FFFFFF;
-  --color-on-tertiary-container: #31111D;
-  --color-tertiary-rgb: 125, 82, 96;
-
-  /* Success Colors */
-  --color-success: #4CAF50;
-  --color-success-container: #1B3A1D;
-  --color-on-success-container: #A5D6A7;
-
-  /* Error Colors */
-  --color-error: #F2B8B5;
-  --color-error-container: #8C1D18;
-  --color-on-error: #601410;
-  --color-on-error-container: #F9DEDC;
+  --color-text: #fafafa;
+  --color-text-secondary: #a1a1aa;
+  --color-text-tertiary: #71717a;
+  --color-on-surface: #fafafa;
+  --color-on-surface-variant: #d4d4d8;
 
   /* Outline Colors */
-  --color-outline: #938F99;
-  --color-outline-variant: #49454F;
+  --color-outline: #3f3f46;
+  --color-outline-variant: #27272a;
 
   /* Elevation Shadows */
-  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  --shadow-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  --shadow-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-  --shadow-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  --shadow-5: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 10px 24px rgba(0, 0, 0, 0.6);
 
   /* Border Radius */
   --radius-xs: 4px;
@@ -83,14 +63,14 @@
   --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-family-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Font Sizes - Material 3 Type Scale */
-  --font-size-display-large: 3.5rem;
-  --font-size-display-medium: 2.8rem;
-  --font-size-display-small: 2.25rem;
+  /* Font Sizes */
+  --font-size-display-large: 4rem;
+  --font-size-display-medium: 3.2rem;
+  --font-size-display-small: 2.5rem;
   --font-size-headline-large: 2rem;
   --font-size-headline-medium: 1.75rem;
   --font-size-headline-small: 1.5rem;
-  --font-size-title-large: 1.375rem;
+  --font-size-title-large: 1.25rem;
   --font-size-title-medium: 1rem;
   --font-size-title-small: 0.875rem;
   --font-size-body-large: 1rem;
@@ -101,14 +81,14 @@
   --font-size-label-small: 0.6875rem;
 
   /* Line Heights */
-  --line-height-tight: 1.2;
+  --line-height-tight: 1.1;
   --line-height-normal: 1.5;
-  --line-height-relaxed: 1.6;
+  --line-height-relaxed: 1.7;
 
   /* Transitions */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Reset and Base Styles */

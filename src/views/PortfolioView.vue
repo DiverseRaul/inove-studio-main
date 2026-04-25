@@ -2,16 +2,15 @@
   <div class="portfolio-page">
     <!-- Hero -->
     <section class="portfolio-hero">
-      <div class="container">
-        <div class="hero-content">
-          <span class="hero-eyebrow">Portfolio</span>
-          <h1 class="hero-heading">Our <span class="gradient-text">Work</span></h1>
-          <p class="hero-description">A selection of projects we've built for clients and ourselves. Each one crafted with care and attention to detail.</p>
+      <div class="container hero-container">
+        <div class="hero-content" data-aos="fade-up">
+          <span class="hero-eyebrow">Selected Works</span>
+          <h1 class="hero-heading">Our <span class="text-accent">Portfolio</span>.</h1>
+          <p class="hero-description">A curated selection of digital products, websites, and platforms we've built with care and attention to detail.</p>
         </div>
       </div>
-      <div class="hero-bg">
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-background">
+        <div class="grid-overlay"></div>
       </div>
     </section>
 
@@ -19,7 +18,7 @@
     <section class="portfolio-content">
       <div class="container">
         <!-- Filter -->
-        <div class="filter-bar">
+        <div class="filter-bar" data-aos="fade-up">
           <button 
             v-for="filter in filters" 
             :key="filter.value"
@@ -34,14 +33,17 @@
         <!-- Grid -->
         <div class="portfolio-grid">
           <a 
-            v-for="item in displayedItems" 
+            v-for="(item, index) in displayedItems" 
             :key="item.id" 
             :href="item.projectUrl" 
             target="_blank" 
             class="portfolio-card"
+            :data-aos="'fade-up'"
+            :data-aos-delay="(index % 2) * 100"
           >
             <div class="card-image-wrapper">
-              <img :src="item.imageUrl" :alt="item.title" class="card-image" />
+              <img v-if="item.imageUrl && item.imageUrl !== '/'" :src="item.imageUrl" :alt="item.title" class="card-image" />
+              <div v-else class="card-image placeholder-img"></div>
               <div class="card-overlay">
                 <span class="overlay-text">
                   View Project
@@ -78,7 +80,7 @@ import { computed, ref } from 'vue';
 const selectedStatus = ref('all');
 
 const filters = [
-  { label: 'All', value: 'all' },
+  { label: 'All Projects', value: 'all' },
   { label: 'Complete', value: 'Complete' },
   { label: 'In Development', value: 'In Development' },
   { label: 'Upcoming', value: 'Upcoming' }
@@ -145,7 +147,7 @@ const displayedItems = computed(() => {
 <style scoped>
 .portfolio-page {
   min-height: 100vh;
-  color: var(--color-text);
+  background: var(--color-background);
 }
 
 .container {
@@ -154,184 +156,174 @@ const displayedItems = computed(() => {
   padding: 0 1.5rem;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* ========== HERO ========== */
 .portfolio-hero {
   position: relative;
-  padding: 12rem 0 6rem;
+  padding: 10rem 0 6rem;
   overflow: hidden;
-  text-align: center;
-  min-height: 70vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
 }
 
-.hero-content {
+.hero-container {
   position: relative;
   z-index: 2;
+}
+
+.hero-content {
   max-width: 700px;
-  margin: 0 auto;
 }
 
 .hero-eyebrow {
   display: inline-block;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-primary);
-  margin-bottom: 1.25rem;
-  padding: 0.3rem 1rem;
-  background: rgba(var(--color-primary-rgb), 0.08);
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50px;
 }
 
 .hero-heading {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 800;
   line-height: 1.1;
-  color: white;
+  color: var(--color-text);
   margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.text-accent {
+  color: var(--color-text-secondary);
+  font-style: italic;
+  font-weight: 300;
 }
 
 .hero-description {
-  font-size: 1.15rem;
-  line-height: 1.8;
+  font-size: 1.25rem;
+  line-height: 1.6;
   color: var(--color-text-secondary);
   max-width: 550px;
-  margin: 0 auto;
 }
 
-.hero-bg {
+/* Hero Background - Clean Grid */
+.hero-background {
   position: absolute;
   inset: 0;
   z-index: 1;
-  overflow: hidden;
+  pointer-events: none;
 }
 
-.hero-orb {
+.grid-overlay {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.2;
-}
-
-.hero-orb-1 {
-  width: 400px;
-  height: 400px;
-  background: var(--color-primary);
-  top: 10%;
-  left: 10%;
-}
-
-.hero-orb-2 {
-  width: 300px;
-  height: 300px;
-  background: var(--color-secondary);
-  bottom: 10%;
-  right: 10%;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(ellipse 80% 80% at 20% 20%, black 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 20% 20%, black 20%, transparent 80%);
 }
 
 /* ========== PORTFOLIO CONTENT ========== */
 .portfolio-content {
-  padding: 4rem 0 6rem;
-  background: var(--color-surface);
+  padding: 2rem 0 8rem;
+  background: var(--color-background);
 }
 
 /* Filter bar */
 .filter-bar {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
+  gap: 0.75rem;
+  margin-bottom: 4rem;
   flex-wrap: wrap;
 }
 
 .filter-btn {
-  padding: 0.5rem 1.25rem;
+  padding: 0.6rem 1.5rem;
   border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   font-family: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-outline);
   background: transparent;
   color: var(--color-text-secondary);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .filter-btn:hover {
-  border-color: rgba(var(--color-primary-rgb), 0.3);
+  border-color: var(--color-text-secondary);
   color: var(--color-text);
+  background: var(--color-surface-variant);
 }
 
 .filter-active {
-  background: rgba(var(--color-primary-rgb), 0.12);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  background: var(--color-text) !important;
+  border-color: var(--color-text) !important;
+  color: var(--color-background) !important;
+  font-weight: 600;
 }
 
 /* Grid */
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 3rem;
 }
 
 /* Card */
 .portfolio-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface-container);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.4s ease;
-}
-
-.portfolio-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(var(--color-primary-rgb), 0.2);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  group: true;
 }
 
 /* Image */
 .card-image-wrapper {
   position: relative;
   width: 100%;
-  height: 240px;
+  aspect-ratio: 16/10;
   overflow: hidden;
-  background: var(--color-background);
+  border-radius: 16px;
+  background: var(--color-surface-variant);
+  margin-bottom: 1.5rem;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  filter: brightness(0.9);
+}
+
+.placeholder-img {
+  background: linear-gradient(135deg, var(--color-surface-variant), var(--color-surface-container-high));
 }
 
 .portfolio-card:hover .card-image {
-  transform: scale(1.08);
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }
 
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: opacity 0.4s ease;
 }
 
 .portfolio-card:hover .card-overlay {
@@ -342,21 +334,26 @@ const displayedItems = computed(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: white;
+  color: #000;
   font-weight: 600;
   font-size: 0.95rem;
-  padding: 0.6rem 1.5rem;
+  padding: 0.75rem 1.75rem;
   border-radius: 50px;
-  background: rgba(var(--color-primary-rgb), 0.6);
-  backdrop-filter: blur(4px);
+  background: #fff;
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+
+.portfolio-card:hover .overlay-text {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 /* Body */
 .card-body {
-  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 
 .card-header {
@@ -368,8 +365,8 @@ const displayedItems = computed(() => {
 }
 
 .card-title {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: var(--color-text);
   margin: 0;
 }
@@ -378,61 +375,58 @@ const displayedItems = computed(() => {
   padding: 0.2rem 0.75rem;
   border-radius: 50px;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
   flex-shrink: 0;
+  border: 1px solid var(--color-outline);
 }
 
 .status-in-development {
-  background: rgba(var(--color-primary-rgb), 0.12);
-  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
 }
 
 .status-upcoming {
-  background: rgba(var(--color-secondary-rgb), 0.12);
-  color: var(--color-secondary);
+  background: transparent;
+  border-style: dashed;
+  color: var(--color-text-tertiary);
 }
 
 .card-desc {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--color-text-secondary);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-  flex-grow: 1;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
 }
 
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .tag {
-  padding: 0.2rem 0.65rem;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: rgba(var(--color-secondary-rgb), 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--color-outline);
   color: var(--color-text-secondary);
-  letter-spacing: 0.02em;
 }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .portfolio-hero {
-    padding: 9rem 0 3rem;
+    padding: 8rem 0 4rem;
     min-height: auto;
   }
   .hero-heading {
-    font-size: 2.25rem;
+    font-size: 2.75rem;
   }
   .portfolio-grid {
     grid-template-columns: 1fr;
-  }
-  .card-image-wrapper {
-    height: 200px;
   }
 }
 </style>

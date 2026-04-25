@@ -28,4 +28,3 @@ import AppFooter from '@/components/AppFooter.vue'
   flex: 1;
 }
 </style>
-

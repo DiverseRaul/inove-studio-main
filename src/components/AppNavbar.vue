@@ -9,15 +9,14 @@
 
         <!-- Desktop Navigation -->
         <div class="navbar-nav desktop-nav">
-          <RouterLink 
+          <a 
             v-for="item in navItems" 
             :key="item.name"
-            :to="item.path" 
+            :href="item.path" 
             class="nav-link"
-            :class="{ 'nav-link-active': $route.path === item.path }"
           >
             {{ item.name }}
-          </RouterLink>
+          </a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -35,15 +34,15 @@
 
       <!-- Mobile Navigation -->
       <div class="mobile-nav" :class="{ 'mobile-nav-open': isMobileMenuOpen }">
-        <RouterLink 
+        <a 
           v-for="item in navItems" 
           :key="item.name"
-          :to="item.path" 
+          :href="item.path" 
           class="mobile-nav-link"
           @click="closeMobileMenu"
         >
           {{ item.name }}
-        </RouterLink>
+        </a>
       </div>
     </div>
   </nav>
@@ -57,10 +56,10 @@ const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 
 const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Portfolio', path: '/portfolio' },
-  { name: 'Contact', path: '/contact' }
+  { name: 'Home', path: '#home' },
+  { name: 'Portfolio', path: '#portfolio' },
+  { name: 'About', path: '#about' },
+  { name: 'Contact', path: '#contact' }
 ]
 
 const handleScroll = () => {
