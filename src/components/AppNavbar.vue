@@ -1,263 +1,237 @@
 <template>
-  <nav class="navbar" :class="{ 'navbar-scrolled': isScrolled }">
-    <div class="container">
-      <div class="navbar-content">
-        <!-- Logo -->
-        <RouterLink to="/" class="navbar-logo">
-          <span class="logo-text">inove.<span>studio</span></span>
-        </RouterLink>
+  <nav class="bottom-nav">
+    <a 
+      v-for="item in navItems" 
+      :key="item.name"
+      :href="item.path" 
+      class="nav-item"
+      :class="{ 'nav-item-active': activeSection === item.id }"
+      @click="onNavClick($event, item)"
+    >
+      <div class="nav-icon" v-html="item.icon"></div>
+      <span class="nav-label">{{ item.name }}</span>
+    </a>
 
-        <!-- Desktop Navigation -->
-        <div class="navbar-nav desktop-nav">
-          <a 
-            v-for="item in navItems" 
-            :key="item.name"
-            :href="item.path" 
-            class="nav-link"
-          >
-            {{ item.name }}
-          </a>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button 
-          class="mobile-menu-btn"
-          @click="toggleMobileMenu"
-          :aria-expanded="isMobileMenuOpen"
-          aria-label="Toggle navigation menu"
-        >
-          <span class="hamburger-line" :class="{ 'hamburger-line-active': isMobileMenuOpen }"></span>
-          <span class="hamburger-line" :class="{ 'hamburger-line-active': isMobileMenuOpen }"></span>
-          <span class="hamburger-line" :class="{ 'hamburger-line-active': isMobileMenuOpen }"></span>
-        </button>
+    <!-- Theme toggle -->
+    <button class="nav-item theme-toggle" @click="toggleTheme" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
+      <div class="nav-icon theme-icon">
+        <!-- Sun icon (shown in dark mode) -->
+        <svg v-if="isDark" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg v-else width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
       </div>
-
-      <!-- Mobile Navigation -->
-      <div class="mobile-nav" :class="{ 'mobile-nav-open': isMobileMenuOpen }">
-        <a 
-          v-for="item in navItems" 
-          :key="item.name"
-          :href="item.path" 
-          class="mobile-nav-link"
-          @click="closeMobileMenu"
-        >
-          {{ item.name }}
-        </a>
-      </div>
-    </div>
+      <span class="nav-label">{{ isDark ? 'Light' : 'Dark' }}</span>
+    </button>
   </nav>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { useTheme } from '@/composables/useTheme'
 
-const isScrolled = ref(false)
-const isMobileMenuOpen = ref(false)
+const { isDark, toggleTheme } = useTheme()
+
+const activeSection = ref('home')
 
 const navItems = [
-  { name: 'Home', path: '#home' },
-  { name: 'Portfolio', path: '#portfolio' },
-  { name: 'About', path: '#about' },
-  { name: 'Contact', path: '#contact' }
+  { 
+    name: 'Home', 
+    path: '#home', 
+    id: 'home',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>'
+  },
+  { 
+    name: 'Portfolio', 
+    path: '#portfolio', 
+    id: 'portfolio',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>'
+  },
+  { 
+    name: 'About', 
+    path: '#about', 
+    id: 'about',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  },
+  { 
+    name: 'Contact', 
+    path: '#contact', 
+    id: 'contact',
+    icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>'
+  }
 ]
 
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 20
+const onNavClick = (event, item) => {
+  event.preventDefault()
+  const el = document.getElementById(item.id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' })
+  }
 }
 
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
+// Track which section is currently in view via scroll position
+const sectionIds = navItems.map(i => i.id)
+let ticking = false
+
+const updateActiveSection = () => {
+  const scrollY = window.scrollY
+  const viewportMid = scrollY + window.innerHeight * 0.4
+
+  let currentId = sectionIds[0]
+
+  for (const id of sectionIds) {
+    const el = document.getElementById(id)
+    if (el && el.offsetTop <= viewportMid) {
+      currentId = id
+    }
+  }
+
+  activeSection.value = currentId
 }
 
-const closeMobileMenu = () => {
-  isMobileMenuOpen.value = false
+const onScroll = () => {
+  if (!ticking) {
+    ticking = true
+    requestAnimationFrame(() => {
+      updateActiveSection()
+      ticking = false
+    })
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', onScroll, { passive: true })
+  setTimeout(updateActiveSection, 200)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', onScroll)
 })
 </script>
 
 <style scoped>
-.navbar {
+.bottom-nav {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-outline-variant);
-  transition: all var(--transition-normal);
-}
-
-.navbar-scrolled {
-  background-color: rgba(18, 18, 18, 0.95);
-  box-shadow: var(--shadow-2);
-}
-
-.navbar-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--spacing-md) 0;
-}
-
-.navbar-logo {
-  text-decoration: none;
-  color: var(--color-text);
-  font-weight: 700;
-  font-size: var(--font-size-title-large);
-  transition: color var(--transition-fast);
-}
-
-.navbar-logo:hover {
-  color: var(--color-primary);
-}
-
-.logo-text {
-  color: white;
-  font-family: var(--font-family);
-  font-size: 2rem;
-}
-
-.logo-text span {
-  font-weight: 200;
-}
-
-.desktop-nav {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xl);
-}
-
-.nav-link {
-  text-decoration: none;
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  font-size: var(--font-size-body-large);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  transition: all var(--transition-fast);
-  position: relative;
-}
-
-.nav-link:hover {
-  color: var(--color-primary);
-  background-color: rgba(103, 80, 164, 0.1);
-}
-
-.nav-link-active {
-  color: var(--color-primary);
-  background-color: rgba(103, 80, 164, 0.15);
-}
-
-.mobile-menu-btn {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  transition: background-color var(--transition-fast);
-}
-
-.mobile-menu-btn:hover {
-  background-color: rgba(103, 80, 164, 0.1);
-}
-
-.hamburger-line {
-  width: 24px;
-  height: 2px;
-  background-color: var(--color-text);
-  margin: 2px 0;
-  transition: all 0.3s ease;
-  border-radius: 2px;
-  transform-origin: center;
-  position: relative;
-}
-
-.mobile-menu-btn {
-  position: relative;
-  width: 40px;
-  height: 40px;
-}
-
-.hamburger-line-active {
-  margin: -1px 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-
-.hamburger-line-active:nth-child(1) {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.hamburger-line-active:nth-child(2) {
-  opacity: 0;
-  transform: translateX(20px);
-}
-
-.hamburger-line-active:nth-child(3) {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.mobile-nav {
-  display: none;
-  flex-direction: column;
-  padding: 0;
-  border-top: 1px solid transparent;
-  margin-top: 0;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: all var(--transition-normal);
-}
-
-.mobile-nav-open {
-  display: flex;
-  padding: var(--spacing-lg) 0;
+  justify-content: space-around;
+  height: 72px;
+  background: rgba(var(--color-background-rgb), 0.82);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
   border-top: 1px solid var(--color-outline-variant);
-  margin-top: var(--spacing-md);
-  max-height: 300px;
-  opacity: 1;
+  padding: 0 0.5rem;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
-.mobile-nav-link {
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   text-decoration: none;
+  color: var(--color-text-tertiary);
+  padding: 8px 12px;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  min-width: 52px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 28px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--color-text);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-item:hover {
   color: var(--color-text-secondary);
-  font-weight: 500;
-  font-size: var(--font-size-body-large);
-  padding: var(--spacing-md) 0;
-  border-radius: var(--radius-sm);
-  transition: color var(--transition-fast);
 }
 
-.mobile-nav-link:hover {
-  color: var(--color-primary);
+.nav-item-active {
+  color: var(--color-text);
 }
 
-@media (max-width: 768px) {
-  .desktop-nav {
-    display: none;
+.nav-item-active::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-item-active .nav-icon {
+  transform: translateY(-1px);
+}
+
+/* Theme toggle doesn't get the ::before indicator */
+.theme-toggle::before {
+  display: none;
+}
+
+.theme-toggle {
+  color: var(--color-text-tertiary);
+}
+
+.theme-toggle:hover {
+  color: var(--color-text);
+}
+
+.theme-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.theme-toggle:active .theme-icon {
+  transform: rotate(30deg) scale(0.9);
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* Desktop: floating pill */
+@media (min-width: 769px) {
+  .bottom-nav {
+    max-width: 480px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 16px;
+    border-radius: 24px;
+    border: 1px solid var(--color-outline-variant);
+    box-shadow: var(--shadow-3);
+    height: 64px;
   }
 
-  .mobile-menu-btn {
-    display: flex;
+  .nav-item {
+    padding: 8px 14px;
   }
-
-  /* Mobile nav is now controlled by mobile-nav-open class only */
 }
 </style>
-

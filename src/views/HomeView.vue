@@ -3,15 +3,15 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
       <div class="container hero-container">
-        <div class="hero-content" data-aos="fade-up">
-          <h1 class="hero-title">
-            Crafting digital <br />
-            <span class="text-accent">experiences.</span>
+        <div class="hero-content">
+          <h1 class="hero-title" v-scroll-animate="{ type: 'blur-in', distance: 40, scaleFrom: 0.88 }">
+            <span class="hero-bold">INOVE</span><br />
+            <span class="hero-light">STUDIO</span>
           </h1>
-          <p class="hero-subtitle">
-            We are a creative studio specializing in sleek, modern web design and interactive digital products. Explore our selected works below.
+          <p class="hero-subtitle" v-scroll-animate="{ type: 'fade-up', delay: 150, distance: 40 }">
+            We are a creative studio specializing in modern web design and interactive products. Explore our work below.
           </p>
-          <div class="hero-actions">
+          <div class="hero-actions" v-scroll-animate="{ type: 'scale-in', delay: 300, scaleFrom: 0.85 }">
             <a href="#portfolio" class="hero-btn-primary">
               View Our Work
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
@@ -22,19 +22,20 @@
       <!-- Subtle background grid -->
       <div class="hero-background">
         <div class="grid-overlay"></div>
+        <div class="hero-glow"></div>
       </div>
     </section>
 
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio-section">
       <div class="container">
-        <div class="section-header" data-aos="fade-up">
+        <div class="section-header" v-scroll-animate="{ type: 'fade-up', distance: 50 }">
           <h2 class="section-title">Portfolio</h2>
           <p class="section-subtitle">A curated selection of digital products, websites, and platforms.</p>
         </div>
 
         <!-- Filter -->
-        <div class="filter-bar" data-aos="fade-up">
+        <div class="filter-bar" v-scroll-animate="{ type: 'fade-up', delay: 100, distance: 30 }">
           <button 
             v-for="filter in filters" 
             :key="filter.value"
@@ -54,8 +55,7 @@
             :href="item.projectUrl" 
             target="_blank" 
             class="portfolio-card"
-            :data-aos="'fade-up'"
-            :data-aos-delay="(index % 2) * 100"
+            v-scroll-animate="{ type: 'stagger', staggerIndex: index, staggerDelay: 120, distance: 70, scaleFrom: 0.9 }"
           >
             <div class="card-image-wrapper">
               <img v-if="item.imageUrl && item.imageUrl !== '/'" :src="item.imageUrl" :alt="item.title" class="card-image" />
@@ -91,8 +91,8 @@
     <!-- About Section -->
     <section id="about" class="about-section">
       <div class="container">
-        <div class="mission-grid" data-aos="fade-up">
-          <div class="mission-text">
+        <div class="mission-grid">
+          <div class="mission-text" v-scroll-animate="{ type: 'fade-right', distance: 60 }">
             <h2 class="section-title">About Us</h2>
             <p class="mission-statement">
               "Websites are more than just sites, they are tools and resources
@@ -100,17 +100,27 @@
             </p>
           </div>
           <div class="mission-stats">
-            <div class="stat-card" v-for="stat in stats" :key="stat.label">
+            <div 
+              class="stat-card" 
+              v-for="(stat, index) in stats" 
+              :key="stat.label"
+              v-scroll-animate="{ type: 'stagger', staggerIndex: index, staggerDelay: 100, distance: 40, scaleFrom: 0.93 }"
+            >
               <span class="stat-value">{{ stat.value }}</span>
               <span class="stat-label">{{ stat.label }}</span>
             </div>
           </div>
         </div>
 
-        <div class="tech-stack-container" data-aos="fade-up">
+        <div class="tech-stack-container" v-scroll-animate="{ type: 'fade-up', distance: 40 }">
           <h3 class="sub-heading">Tools & Technologies</h3>
           <div class="tech-grid">
-            <div v-for="tech in techStack" :key="tech.name" class="tech-item">
+            <div 
+              v-for="(tech, index) in techStack" 
+              :key="tech.name" 
+              class="tech-item"
+              v-scroll-animate="{ type: 'stagger', staggerIndex: index, staggerDelay: 60, distance: 25, scaleFrom: 0.9 }"
+            >
               <span class="tech-name">{{ tech.name }}</span>
             </div>
           </div>
@@ -121,13 +131,13 @@
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
       <div class="container">
-        <div class="section-header" data-aos="fade-up">
+        <div class="section-header" v-scroll-animate="{ type: 'fade-up', distance: 50 }">
           <h2 class="section-title">Contact</h2>
-          <p class="section-subtitle">Have a question or want to discuss a project? Reach out below.</p>
+          <p class="section-subtitle">Have a question? We're here to help. Reach out below.</p>
         </div>
 
         <div class="contact-grid">
-          <div class="contact-form-wrapper" data-aos="fade-right">
+          <div class="contact-form-wrapper" v-scroll-animate="{ type: 'fade-right', distance: 50 }">
             <form @submit.prevent="HandleSubmit" class="contact-form" novalidate>
               <div class="form-row">
                 <div class="form-group">
@@ -168,8 +178,9 @@
                   @blur="ValidateField('Subject')"
                 >
                   <option value="" disabled>Select a topic</option>
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="Project Proposal">Project Proposal</option>
+                  <option value="General Question">General Question</option>
+                  <option value="Bug Report">Bug Report</option>
+                  <option value="Feedback">Feedback</option>
                   <option value="Other">Other</option>
                </select>
                 <span v-if="Errors.Subject" class="error-msg">{{ Errors.Subject }}</span>
@@ -182,7 +193,7 @@
                   v-model="Form.Message" 
                   class="form-input form-textarea"
                   :class="{ 'input-error': Errors.Message }"
-                  placeholder="Tell us about your project..."
+                  placeholder="What can we help you with?"
                   rows="5"
                   @blur="ValidateField('Message')"
                 ></textarea>
@@ -207,10 +218,10 @@
             </form>
           </div>
 
-          <div class="contact-info" data-aos="fade-left">
+          <div class="contact-info" v-scroll-animate="{ type: 'fade-left', distance: 50 }">
             <div class="info-card">
-              <h3 class="info-title">Contact Information</h3>
-              <p class="info-desc">Feel free to reach out directly through email.</p>
+              <h3 class="info-title">Get in Touch</h3>
+              <p class="info-desc">You can also email us directly if you prefer.</p>
               
               <div class="info-items">
                 <a href="mailto:contact@inove.studio" class="info-item">
@@ -222,16 +233,6 @@
                     <span class="info-value">contact@inove.studio</span>
                   </div>
                 </a>
-
-                <div class="info-item">
-                  <div class="info-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                  </div>
-                  <div>
-                    <span class="info-label">Website</span>
-                    <span class="info-value">inove.studio</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -427,6 +428,7 @@ const HandleSubmit = async () => {
 .home {
   min-height: 100vh;
   background: var(--color-background);
+  overflow-x: hidden;
 }
 
 .container {
@@ -451,31 +453,46 @@ const HandleSubmit = async () => {
 }
 
 .hero-content {
-  max-width: 800px;
+  max-width: 100%;
+  text-align: center;
 }
 
 .hero-title {
   color: var(--color-text);
   font-family: var(--font-family-display);
-  font-size: clamp(3.5rem, 8vw, 6.5rem);
-  margin-bottom: 1.5rem;
-  font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-size: clamp(5rem, 15vw, 14rem);
+  margin-bottom: 2rem;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
 }
 
-.text-accent {
+.hero-bold {
+  font-weight: 800;
+  display: inline-block;
+}
+
+.hero-dot {
+  font-weight: 800;
+  color: var(--color-text-tertiary);
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.hero-light {
+  font-weight: 200;
+  letter-spacing: 0.2em;
   color: var(--color-text-secondary);
-  font-style: italic;
-  font-weight: 300;
+  display: inline-block;
+  font-size: 0.85em;
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
-  max-width: 600px;
-  margin-bottom: 2.5rem;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
   font-weight: 400;
 }
 
@@ -495,7 +512,7 @@ const HandleSubmit = async () => {
 
 .hero-btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(var(--color-primary-rgb), 0.15);
 }
 
 .hero-background {
@@ -509,11 +526,32 @@ const HandleSubmit = async () => {
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(var(--color-primary-rgb), 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--color-primary-rgb), 0.04) 1px, transparent 1px);
   background-size: 4rem 4rem;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 20%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 20%, transparent 80%);
+}
+
+/* Animated ambient glow */
+.hero-glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(var(--color-primary-rgb), 0.04) 0%,
+    transparent 70%
+  );
+  animation: glowPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+  100% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
 }
 
 /* Shared Sections */
@@ -586,6 +624,11 @@ const HandleSubmit = async () => {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-card:hover {
+  transform: translateY(-6px) !important;
 }
 
 .card-image-wrapper {
@@ -682,7 +725,7 @@ const HandleSubmit = async () => {
 }
 
 .status-in-development {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--color-primary-rgb), 0.05);
   color: var(--color-text-secondary);
 }
 
@@ -754,6 +797,12 @@ const HandleSubmit = async () => {
   border: 1px solid var(--color-outline-variant);
   border-radius: 16px;
   padding: 1.5rem 2rem;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.stat-card.scroll-visible:hover {
+  border-color: var(--color-outline);
+  box-shadow: 0 4px 20px rgba(var(--color-primary-rgb), 0.05);
 }
 
 .stat-value {
@@ -900,7 +949,7 @@ const HandleSubmit = async () => {
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 5px 15px rgba(var(--color-primary-rgb), 0.1);
 }
 
 .submit-btn:disabled {
@@ -983,7 +1032,7 @@ const HandleSubmit = async () => {
 }
 
 .info-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(var(--color-primary-rgb), 0.05);
 }
 
 .info-icon {
@@ -1030,7 +1079,7 @@ const HandleSubmit = async () => {
     padding: 6rem 0 4rem;
   }
   .hero-title {
-    font-size: 3rem;
+    font-size: 4rem;
   }
   .form-row {
     grid-template-columns: 1fr;
