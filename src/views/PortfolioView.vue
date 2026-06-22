@@ -96,7 +96,7 @@ const portfolioItems = ref([
   {
     id: 1,
     title: 'Bolao Mania',
-    description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
+    description: 'Platform for you to create and manage your own soccer groups. Predict the winner and climb the leaderboards.',
     imageUrl: '/bolaomaniawebpage.png',
     tags: ['Mobile', 'Web App', 'Sports'],
     projectUrl: 'https://bolaomania.com',
@@ -104,29 +104,20 @@ const portfolioItems = ref([
   },
   {
     id: 2,
-    title: 'inove.profile',
-    description: 'Manage your profile for inove.studio. Create your profile and start up your journey for the future.',
-    imageUrl: '/inoveprofilewebimage.png',
-    tags: ['Web App', 'Profile', 'Data'],
-    projectUrl: 'https://profile.inove.studio',
-    status: 'In Development'
-  },
-  {
-    id: 3,
     title: 'my soccer lab',
-    description: 'The ultimate platform for soccer analytics and team management.',
+    description: 'Track your soccer performance and analyze your stats.',
     imageUrl: '/mysoccerlab.png',
     tags: ['Soccer', 'Analytics', 'Mobile'],
     projectUrl: 'https://mysoccerlab.inove.studio',
     status: 'Complete'
   },
   {
-    id: 4,
-    title: 'inove.games',
-    description: 'Find and play/access our games.',
+    id: 3,
+    title: 'socceradar',
+    description: 'Find open soccer fields near you. Join local pickup games or create your own and invite others.',
     imageUrl: '/',
-    tags: ['Games', 'Mobile'],
-    projectUrl: 'https://games.inove.studio',
+    tags: ['Soccer', 'Mobile', 'Maps'],
+    projectUrl: '',
     status: 'In Development'
   }
 ]);
