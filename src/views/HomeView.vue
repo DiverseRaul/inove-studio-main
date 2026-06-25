@@ -9,7 +9,7 @@
             <span class="hero-light">STUDIO</span>
           </h1>
           <p class="hero-subtitle" v-scroll-animate="{ type: 'fade-up', delay: 150, distance: 40 }">
-            We are a creative studio specializing in modern web design and interactive products. Explore our work below.
+            A small studio building web and mobile apps. Take a look at what we've made.
           </p>
           <div class="hero-actions" v-scroll-animate="{ type: 'scale-in', delay: 300, scaleFrom: 0.85 }">
             <a href="#portfolio" class="hero-btn-primary">
@@ -22,7 +22,6 @@
       <!-- Subtle background grid -->
       <div class="hero-background">
         <div class="grid-overlay"></div>
-        <div class="hero-glow"></div>
       </div>
     </section>
 
@@ -94,10 +93,6 @@
         <div class="mission-grid">
           <div class="mission-text" v-scroll-animate="{ type: 'fade-right', distance: 60 }">
             <h2 class="section-title">About Us</h2>
-            <p class="mission-statement">
-              "Websites are more than just sites, they are tools and resources
-              that should be accessible to everyone and meet the needs of the user."
-            </p>
           </div>
           <div class="mission-stats">
             <div 
@@ -133,7 +128,7 @@
       <div class="container">
         <div class="section-header" v-scroll-animate="{ type: 'fade-up', distance: 50 }">
           <h2 class="section-title">Contact</h2>
-          <p class="section-subtitle">Have a question? We're here to help. Reach out below.</p>
+          <p class="section-subtitle">Got a project or a question? Send us a message.</p>
         </div>
 
         <div class="contact-grid">
@@ -265,7 +260,7 @@ const portfolioItems = ref([
   {
     id: 1,
     title: 'Bolao Mania',
-    description: 'Innovative mobile platform designed for seamless cross-device interaction and a rich user experience.',
+    description: 'Create and manage your own soccer prediction groups. Pick the winners and climb the leaderboard against your friends.',
     imageUrl: '/bolaomaniawebpage.png',
     tags: ['Mobile', 'Web App', 'Sports'],
     projectUrl: 'https://bolaomania.com',
@@ -273,29 +268,20 @@ const portfolioItems = ref([
   },
   {
     id: 2,
-    title: 'inove.profile',
-    description: 'Manage your profile for inove.studio. Create your profile and start up your journey for the future.',
-    imageUrl: '/inoveprofilewebimage.png',
-    tags: ['Web App', 'Profile', 'Data'],
-    projectUrl: 'https://profile.inove.studio',
-    status: 'In Development'
-  },
-  {
-    id: 3,
     title: 'my soccer lab',
-    description: 'The ultimate platform for soccer analytics and team management.',
+    description: 'Track your soccer performance and dig into your own stats over time.',
     imageUrl: '/mysoccerlab.png',
     tags: ['Soccer', 'Analytics', 'Mobile'],
     projectUrl: 'https://mysoccerlab.inove.studio',
     status: 'Complete'
   },
   {
-    id: 4,
-    title: 'inove.games',
-    description: 'Find and play/access our games.',
+    id: 3,
+    title: 'socceradar',
+    description: 'Find open soccer fields near you. Join local pickup games or create your own and invite others.',
     imageUrl: '/',
-    tags: ['Games', 'Mobile'],
-    projectUrl: 'https://games.inove.studio',
+    tags: ['Soccer', 'Mobile', 'Maps'],
+    projectUrl: '',
     status: 'In Development'
   }
 ]);
@@ -315,7 +301,6 @@ const displayedItems = computed(() => {
 /* ABOUT LOGIC */
 const stats = ref([
   { value: '5+', label: 'Projects Delivered' },
-  { value: '100%', label: 'Client Satisfaction' },
   { value: '2+', label: 'Years Experience' }
 ])
 
@@ -531,27 +516,6 @@ const HandleSubmit = async () => {
   background-size: 4rem 4rem;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 20%, transparent 80%);
   -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 0%, black 20%, transparent 80%);
-}
-
-/* Animated ambient glow */
-.hero-glow {
-  position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 60%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(var(--color-primary-rgb), 0.04) 0%,
-    transparent 70%
-  );
-  animation: glowPulse 6s ease-in-out infinite alternate;
-}
-
-@keyframes glowPulse {
-  0% { opacity: 0.4; transform: translateX(-50%) scale(1); }
-  100% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
 }
 
 /* Shared Sections */

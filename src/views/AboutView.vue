@@ -6,10 +6,10 @@
         <div class="hero-content">
           <span class="hero-eyebrow">About Us</span>
           <h1 class="hero-heading">
-            Where Innovation Meets <span class="gradient-text">Creativity</span>
+            A small studio that builds <span class="gradient-text">web & mobile apps</span>
           </h1>
           <p class="hero-description">
-            We are a forward-thinking creative studio that bridges the gap between imagination and reality. Building digital experiences that matter.
+            We're a small team that designs and ships software — apps like Bolão Mania and My Soccer Lab. We like clean work, fast products, and skipping the buzzwords.
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <div class="mission-grid">
           <div class="mission-text">
             <span class="section-eyebrow">Our Mission</span>
-            <h2 class="section-heading">Empowering through <span class="gradient-text">Design & Technology</span></h2>
+            <h2 class="section-heading">Built around <span class="gradient-text">the people who use it</span></h2>
             <p class="mission-statement">
               "Websites are more than just sites, they are tools and resources
               that should be accessible to everyone and meet the needs of the user."
@@ -47,7 +47,7 @@
         <div class="section-header-center">
           <span class="section-eyebrow">Technologies</span>
           <h2 class="section-heading">Tools We Use</h2>
-          <p class="section-sub">Modern technologies to build fast, scalable, and beautiful products.</p>
+          <p class="section-sub">The tools we reach for to build fast, reliable products.</p>
         </div>
         <div class="tech-grid">
           <div v-for="tech in techStack" :key="tech.name" class="tech-item">
@@ -61,9 +61,9 @@
     <section class="about-cta">
       <div class="container">
         <div class="cta-card">
-          <h2 class="cta-heading">Transform Your <span class="gradient-text">Digital Vision</span> Into Reality</h2>
+          <h2 class="cta-heading">Have a <span class="gradient-text">project</span> in mind?</h2>
           <p class="cta-desc">
-            Ready to elevate your online presence? Let's collaborate to create something extraordinary.
+            Tell us what you're building and we'll help you get it shipped.
           </p>
           <div class="cta-actions">
             <BaseButton variant="filled" size="large" color="primary" to="/contact" class="cta-btn-primary">
